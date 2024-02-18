@@ -1,5 +1,6 @@
 package com.uca.contact;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,47 +50,45 @@ public class EditContactFragment extends Fragment {
 
         Contact contact = contactsDatabase.getContactByTel(this.getContactTel());
 
-        ((TextView)binding.findViewById(R.id.tel)).setText(contact.getTel());
-        ((TextView)binding.findViewById(R.id.name)).setText(contact.getName());
-        ((TextView)binding.findViewById(R.id.address)).setText(contact.getAddress());
+        TextView telText = binding.findViewById(R.id.tel);
+        TextView nameText = binding.findViewById(R.id.name);
+        TextView addressText = binding.findViewById(R.id.address);
+        telText.setText(contact.getTel());
+        nameText.setText(contact.getName());
+        addressText.setText(contact.getAddress());
         ((ImageView)binding.findViewById(R.id.photo)).setImageResource(R.drawable.ic_user);
 
-        Button totoButton = binding.findViewById(R.id.save);
+        Button saveButton = binding.findViewById(R.id.save);
 
-        if (this.getMode().equals("edit")) {
-            totoButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Contact contactToSave = new Contact(
-                            ((TextView)v.findViewById(R.id.tel)).getText().toString(),
-                            ((TextView)v.findViewById(R.id.name)).getText().toString(),
-                            ((TextView)v.findViewById(R.id.address)).getText().toString()
-                    );
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Contact contactToSave = new Contact(
+                        telText.getText().toString(),
+                        nameText.getText().toString(),
+                        addressText.getText().toString()
+                );
 
+                if (getMode().equals("edit")) {
                     contactsDatabase.updateContact(contactToSave);
-
-                    ContactSavedDialogFragment dialogFragment = new ContactSavedDialogFragment();
-                    dialogFragment.show(requireActivity().getSupportFragmentManager(), "ContactSavedDialogFragment");
-                }
-            });
-        }
-        else {
-            totoButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Contact contactToSave = new Contact(
-                            ((TextView)v.findViewById(R.id.tel)).getText().toString(),
-                            ((TextView)v.findViewById(R.id.name)).getText().toString(),
-                            ((TextView)v.findViewById(R.id.address)).getText().toString()
-                    );
-
+                } else {
                     contactsDatabase.addContact(contactToSave);
-
-                    ContactSavedDialogFragment dialogFragment = new ContactSavedDialogFragment();
-                    dialogFragment.show(requireActivity().getSupportFragmentManager(), "ContactSavedDialogFragment");
                 }
-            });
-        }
+
+                ContactSavedDialogFragment dialogFragment = new ContactSavedDialogFragment();
+                dialogFragment.show(requireActivity().getSupportFragmentManager(), "ContactSavedDialogFragment");
+            }
+        });
+
+        Button cancelButton = binding.findViewById(R.id.cancel);
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return binding;
 

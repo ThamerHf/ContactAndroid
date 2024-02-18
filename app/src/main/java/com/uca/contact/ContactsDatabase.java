@@ -125,16 +125,16 @@ public class ContactsDatabase extends SQLiteOpenHelper {
         //values.put("PHOTO", contact.getPhoto());
 
         // Updating Row
-        db.update("CONTACTS", values, "WHERE TEL = ?", new String[]{contact.getTel()});
+        db.update("CONTACTS", values, "TEL = ?", new String[]{contact.getTel()});
         db.close(); // Closing database connection
     }
 
     // Add a method to delete a contact from the database
-    public void deleteContact(Contact contact) {
+    public void deleteContact(String tel) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         // Deleting Row
-        db.delete("CONTACTS", "WHERE TEL = ?", new String[]{contact.getTel()});
+        db.delete("CONTACTS", "TEL = ?", new String[]{tel});
         db.close(); // Closing database connection
     }
 }

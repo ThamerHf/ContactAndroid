@@ -68,4 +68,5 @@
         android:adjustViewBounds="true"
         android:background="@drawable/ic_delete"
         android:scaleType="centerCrop" />
+
 </LinearLayout>
