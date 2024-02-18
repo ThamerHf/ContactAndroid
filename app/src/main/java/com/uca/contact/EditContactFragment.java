@@ -6,15 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.uca.contact.model.Contact;
+import com.uca.contact.model.ContactsDatabase;
 
 public class EditContactFragment extends Fragment {
 
@@ -75,8 +73,8 @@ public class EditContactFragment extends Fragment {
                     contactsDatabase.addContact(contactToSave);
                 }
 
-                ContactSavedDialogFragment dialogFragment = new ContactSavedDialogFragment();
-                dialogFragment.show(requireActivity().getSupportFragmentManager(), "ContactSavedDialogFragment");
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
 

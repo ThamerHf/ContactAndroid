@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.uca.contact.model.Contact;
+import com.uca.contact.model.ContactsDatabase;
 
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
                         .setMessage("Ary you sure you want to delete the contact?")
                         .setPositiveButton("yes", (dialog, which) -> {
                             ContactsDatabase contactsDatabase = new ContactsDatabase(context);
-                            contactsDatabase.deleteContact(viewHolder.contactNameTextView.getText().toString());
+                            contactsDatabase.deleteContact(contactItem.getTel());
                             Intent intent = new Intent(context, MainActivity.class);
                             context.startActivity(intent);
                         })

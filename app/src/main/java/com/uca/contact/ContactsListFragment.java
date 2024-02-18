@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.uca.contact.databinding.ContactsListFragmentBinding;
 import com.uca.contact.model.Contact;
+import com.uca.contact.model.ContactsDatabase;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class ContactsListFragment extends Fragment {
         View binding = inflater.inflate(R.layout.contacts_list_fragment, container, false);
 
         contactsDatabase = new ContactsDatabase(getActivity());
+        //TODO remove default data after finishing the add contact functionality
         contactsDatabase.addContact(new Contact("123", "Test", "Test address"));
         List<Contact> contacts = contactsDatabase.getAllContacts();
 

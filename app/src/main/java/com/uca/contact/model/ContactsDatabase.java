@@ -1,4 +1,4 @@
-package com.uca.contact;
+package com.uca.contact.model;
 
 import android.content.ContentValues;
 import android.content.Context;
