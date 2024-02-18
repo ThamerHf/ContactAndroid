@@ -43,4 +43,9 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="enter_a_contact_name">Enter a contact name</string>
+    <string name="contact_name">Contact name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>

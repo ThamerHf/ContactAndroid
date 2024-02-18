@@ -1,35 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondFragment">
+    tools:context=".SecondFragment"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="10dp"
+        app:cardBackgroundColor="#EDE9E9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Media -->
+
+            <ImageView
+                android:layout_width="246dp"
+                android:layout_height="226dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="test"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_user" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Title, secondary and supporting text -->
+                <EditText
+                    android:id="@+id/userName"
+                    android:layout_width="357dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectange_edit"
+                    android:hint="@string/contact_name"
+                    android:singleLine="true"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/telphone"
+                    android:layout_width="357dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectange_edit"
+                    android:hint="@string/phone_number"
+                    android:singleLine="true"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/address"
+                    android:layout_width="357dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectange_edit"
+                    android:hint="Address"
+                    android:singleLine="true"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
 
         <Button
-            android:id="@+id/button_second"
-            android:layout_width="wrap_content"
+            android:id="@+id/save"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="@string/previous"
-            app:layout_constraintBottom_toTopOf="@id/textview_second"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#94C1AB"
+            android:text="@string/save"
+            android:textColor="@color/black"/>
 
-        <TextView
-            android:id="@+id/textview_second"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/lorem_ipsum"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_second" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+            android:backgroundTint="#B38E8E"
+            android:text="@string/cancel"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contactRow"
+    android:layout_width="386dp"
+    android:layout_height="79dp"
+    android:layout_gravity="center_horizontal"
+    android:animateLayoutChanges="false"
+    android:background="#EDE9E9"
+    android:orientation="horizontal"
+    tools:layout_editor_absoluteX="13dp"
+    tools:layout_editor_absoluteY="16dp">
+
+
+    <!-- Contact name -->
+    <ImageView
+        android:id="@+id/initialTextView"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/ic_user"
+        android:gravity="center"
+        android:scaleType="centerCrop" />
+
+    <!-- Action icons (add more as needed) -->
+
+    <TextView
+        android:id="@+id/contactNameTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="24dp"
+        android:layout_weight="1"
+        android:singleLine="true"
+        android:text="Alice"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/callButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="6dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/ic_call"
+        android:scaleType="centerCrop" />
+
+    <ImageButton
+        android:id="@+id/edit"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="6dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/ic_edit"
+        android:scaleType="centerCrop"
+        android:onClick="switchToSecondLayout"/>
+
+    <ImageButton
+        android:id="@+id/deleteButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="6dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/ic_delete"
+        android:scaleType="centerCrop" />
+</LinearLayout>
