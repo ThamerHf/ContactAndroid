@@ -4,16 +4,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.uca.contact.databinding.FragmentFirstBinding;
+import com.uca.contact.model.Tuple;
+
+import java.sql.Blob;
+import java.util.ArrayList;
 
 public class FirstFragment extends Fragment {
 
+
     private FragmentFirstBinding binding;
+
+
 
     @Override
     public View onCreateView(
@@ -21,21 +27,40 @@ public class FirstFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        View binding = inflater.inflate(R.layout.fragment_first, container, false);
+
+        ListView list = binding.findViewById(R.id.contactList);
+        ArrayList<Tuple<String, Integer>> postArray = new ArrayList<>();
+        postArray.add(new Tuple<>("p1", R.drawable.ic_call));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+        postArray.add(new Tuple<>("p2", R.drawable.ic_delete));
+
+        // Ajoutez autant d'éléments que nécessaire
+
+        ContactsAdapter adapter = new ContactsAdapter(requireContext(), R.layout.item_list, postArray);
+        list.setAdapter(adapter);
+
+
+        return binding;
 
     }
-
+/*
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-            }
-        });
+
     }
 
     @Override
@@ -43,5 +68,5 @@ public class FirstFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
+*/
 }
