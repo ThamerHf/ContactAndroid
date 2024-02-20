@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondFragment"
+    tools:context=".EditContactFragment"
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
@@ -24,6 +24,7 @@
             <!-- Media -->
 
             <ImageView
+                android:id="@+id/photo"
                 android:layout_width="246dp"
                 android:layout_height="226dp"
                 android:layout_gravity="center_horizontal"
@@ -39,7 +40,7 @@
 
                 <!-- Title, secondary and supporting text -->
                 <EditText
-                    android:id="@+id/userName"
+                    android:id="@+id/name"
                     android:layout_width="357dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectange_edit"
@@ -50,7 +51,7 @@
                     android:layout_marginTop="10dp"/>
 
                 <EditText
-                    android:id="@+id/telphone"
+                    android:id="@+id/tel"
                     android:layout_width="357dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectange_edit"
@@ -90,16 +91,18 @@
             android:layout_marginTop="40dp"
             android:layout_marginBottom="10dp"
             android:backgroundTint="#94C1AB"
+            android:clickable="true"
             android:text="@string/save"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/cancel"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#B38E8E"
+            android:clickable="true"
             android:text="@string/cancel"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
     </LinearLayout>
 
 

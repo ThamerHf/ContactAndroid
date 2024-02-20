@@ -1,7 +1,7 @@
 package com.uca.contact;
 
 import android.content.Context;
-import android.os.Bundle;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +10,25 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.uca.contact.model.Tuple;
+import com.uca.contact.model.Contact;
+import com.uca.contact.model.ContactsDatabase;
 
 import java.util.List;
 
-public class ContactsAdapter extends ArrayAdapter<Tuple<String, Integer>> {
+public class ContactsAdapter extends ArrayAdapter<Contact> {
 
     private LayoutInflater inflater;
 
-    public ContactsAdapter(@NonNull Context context, int resource, @NonNull List<Tuple<String, Integer>> objects) {
+    private Context context;
+
+    public ContactsAdapter(@NonNull Context context, int resource, @NonNull List<Contact> objects) {
         super(context, resource, objects);
         inflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @Override
@@ -39,19 +44,23 @@ public class ContactsAdapter extends ArrayAdapter<Tuple<String, Integer>> {
         }
 
         // Récupérer l'élément à cette position
-        Tuple<String, Integer> contactItem = getItem(position);
+        Contact contactItem = getItem(position);
 
         // Remplir la vue avec les données de l'élément
-        viewHolder.contactNameTextView.setText(contactItem.first);
+        viewHolder.contactNameTextView.setText(contactItem.getName());
         // Modifiez l'image ici si nécessaire (par exemple, à partir de ressources, d'URL, etc.)
-        viewHolder.contactImageView.setImageResource(contactItem.second);
+        viewHolder.contactImageView.setImageResource(R.drawable.ic_user);
+        //viewHolder.contactImageView.setImageBitmap(BitmapFactory.decodeByteArray(contactItem.getPhoto(), 0, contactItem.getPhoto().length));
 
-        ImageButton totoButton = convertView.findViewById(R.id.edit);
-        totoButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton editButton = convertView.findViewById(R.id.edit);
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Créer une instance du fragment SecondFragment
-                SecondFragment secondFragment = new SecondFragment();
+                EditContactFragment editContactFragment = new EditContactFragment();
+
+                editContactFragment.setContactTel(contactItem.getTel());
+                editContactFragment.setMode("edit");
 
                 /*// Passer des données au SecondFragment si nécessaire
                 Bundle bundle = new Bundle();
@@ -60,9 +69,27 @@ public class ContactsAdapter extends ArrayAdapter<Tuple<String, Integer>> {
 */
                 // Remplacer le fragment actuel par le SecondFragment
                 FragmentTransaction transaction = ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container_view, secondFragment);
+                transaction.replace(R.id.fragment_container_view, editContactFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
+            }
+        });
+
+        ImageButton deleteButton = convertView.findViewById(R.id.deleteButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Contact deletion")
+                        .setMessage("Ary you sure you want to delete the contact?")
+                        .setPositiveButton("yes", (dialog, which) -> {
+                            ContactsDatabase contactsDatabase = new ContactsDatabase(context);
+                            contactsDatabase.deleteContact(contactItem.getTel());
+                            Intent intent = new Intent(context, MainActivity.class);
+                            context.startActivity(intent);
+                        })
+                        .setNegativeButton("no", null) // No action for cancel button
+                        .show();
             }
         });
 
