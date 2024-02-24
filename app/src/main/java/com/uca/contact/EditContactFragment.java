@@ -1,5 +1,7 @@
 package com.uca.contact;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,15 +18,15 @@ import com.uca.contact.model.ContactsDatabase;
 
 public class EditContactFragment extends Fragment {
 
-    private String contactTel;
+    private String contactId;
     private String mode;
 
-    public String getContactTel() {
-        return contactTel;
+    public String getContactId() {
+        return contactId;
     }
 
-    public void setContactTel(String contactTel) {
-        this.contactTel = contactTel;
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
     }
 
     public String getMode() {
@@ -46,7 +48,12 @@ public class EditContactFragment extends Fragment {
         View binding = inflater.inflate(R.layout.edit_contact_fragment, container, false);
         contactsDatabase = new ContactsDatabase(getActivity());
 
-        Contact contact = contactsDatabase.getContactByTel(this.getContactTel());
+        Contact contact = null;
+        if (this.getContactId() != null) {
+            contact = contactsDatabase.getContactByContactId(this.getContactId());
+        } else {
+            contact = new Contact();
+        }
 
         TextView telText = binding.findViewById(R.id.tel);
         TextView nameText = binding.findViewById(R.id.name);
@@ -67,14 +74,41 @@ public class EditContactFragment extends Fragment {
                         addressText.getText().toString()
                 );
 
-                if (getMode().equals("edit")) {
-                    contactsDatabase.updateContact(contactToSave);
+                contactToSave.setContactId(getContactId());
+                if (contactToSave.getName().isEmpty()
+                        || contactToSave.getName().trim().isEmpty()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                    String alertTitle;
+                    if (getMode().equals("edit")) {
+                        alertTitle = "Update contact";
+                    } else {
+                        alertTitle = "Add new contact";
+                    }
+                    builder.setTitle(alertTitle)
+                            .setMessage("Contact's name is required")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Handle positive button click
+                                    dialog.dismiss(); // Close the dialog
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Handle negative button click or simply close the dialog
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
                 } else {
-                    contactsDatabase.addContact(contactToSave);
-                }
+                    if (getMode().equals("edit")) {
+                        contactsDatabase.updateContact(contactToSave);
+                    } else {
+                        contactsDatabase.addContact(contactToSave);
+                    }
 
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -92,24 +126,5 @@ public class EditContactFragment extends Fragment {
 
     }
 
-
-    /*
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
-            }
-        });
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }*/
 
 }

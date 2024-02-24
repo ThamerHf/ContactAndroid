@@ -6,10 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.uca.contact.model.Contact;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ContactsDatabase extends SQLiteOpenHelper {
 
@@ -27,11 +26,13 @@ public class ContactsDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Create contacts table
         String CREATE_CONTACTS_TABLE = "CREATE TABLE CONTACTS (" +
-                "TEL TEXT PRIMARY KEY" +
+                "CONTACT_ID TEXT PRIMARY KEY" +
+                ",TEL TEXT"+
                 ",NAME TEXT" +
                 ",ADDRESS TEXT" +
                 //",PHOTO BLOB" +
                 ")";
+
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -57,9 +58,10 @@ public class ContactsDatabase extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Contact contact = new Contact();
-                contact.setTel(cursor.getString(0));
-                contact.setName(cursor.getString(1));
-                contact.setAddress(cursor.getString(2));
+                contact.setContactId(cursor.getString(0));
+                contact.setTel(cursor.getString(1));
+                contact.setName(cursor.getString(2));
+                contact.setAddress(cursor.getString(3));
                 //contact.setPhoto(cursor.getBlob(3));
                 // Adding contact to list
                 contactList.add(contact);
@@ -75,19 +77,20 @@ public class ContactsDatabase extends SQLiteOpenHelper {
     }
 
     // Method to fetch one contact from the database by his telephone number
-    public Contact getContactByTel(String tel) {
+    public Contact getContactByContactId(String contactId) {
         Contact contact = null;
         // Select Query
-        String selectQuery = "SELECT * FROM CONTACTS WHERE TEL = ?";
+        String selectQuery = "SELECT * FROM CONTACTS WHERE CONTACT_ID = ?";
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, new String[] {tel});
+        Cursor cursor = db.rawQuery(selectQuery, new String[] {contactId});
 
         if (cursor != null && cursor.moveToFirst()) {
             contact = new Contact();
-            contact.setTel(cursor.getString(0));
-            contact.setName(cursor.getString(1));
-            contact.setAddress(cursor.getString(2));
+            contact.setContactId(cursor.getString(0));
+            contact.setTel(cursor.getString(1));
+            contact.setName(cursor.getString(2));
+            contact.setAddress(cursor.getString(3));
             //contact.setPhoto(cursor.getBlob(3));
         }
 
@@ -104,6 +107,7 @@ public class ContactsDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put("CONTACT_ID", UUID.randomUUID().toString());
         values.put("TEL", contact.getTel());
         values.put("NAME", contact.getName());
         values.put("ADDRESS", contact.getAddress());
@@ -122,19 +126,21 @@ public class ContactsDatabase extends SQLiteOpenHelper {
         values.put("TEL", contact.getTel());
         values.put("NAME", contact.getName());
         values.put("ADDRESS", contact.getAddress());
+        values.put("CONTACT_ID", contact.getContactId());
         //values.put("PHOTO", contact.getPhoto());
 
         // Updating Row
-        db.update("CONTACTS", values, "TEL = ?", new String[]{contact.getTel()});
+        db.update("CONTACTS", values, "CONTACT_ID = ?", new String[]{contact.getTel()});
         db.close(); // Closing database connection
     }
 
     // Add a method to delete a contact from the database
-    public void deleteContact(String tel) {
+    public void deleteContact(String contactId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         // Deleting Row
-        db.delete("CONTACTS", "TEL = ?", new String[]{tel});
+        db.delete("CONTACTS", "CONTACT_ID = ?", new String[]{contactId});
         db.close(); // Closing database connection
     }
+
 }

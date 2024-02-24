@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,18 +20,23 @@ import androidx.fragment.app.FragmentTransaction;
 import com.uca.contact.model.Contact;
 import com.uca.contact.model.ContactsDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ContactsAdapter extends ArrayAdapter<Contact> {
+public class ContactsAdapter extends ArrayAdapter<Contact> implements Filterable {
 
+    private List<Contact> originalContacts;
+    private List<Contact> filteredContacts;
     private LayoutInflater inflater;
-
     private Context context;
 
-    public ContactsAdapter(@NonNull Context context, int resource, @NonNull List<Contact> objects) {
-        super(context, resource, objects);
+    public ContactsAdapter(@NonNull Context context, int resource,
+                           @NonNull List<Contact> contacts) {
+        super(context, resource, contacts);
         inflater = LayoutInflater.from(context);
         this.context = context;
+        this.originalContacts = new ArrayList<>(contacts);
+        this.filteredContacts = new ArrayList<>(contacts);
     }
 
     @Override
@@ -45,6 +53,7 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
 
         // Récupérer l'élément à cette position
         Contact contactItem = getItem(position);
+        System.out.println(contactItem.getContactId());
 
         // Remplir la vue avec les données de l'élément
         viewHolder.contactNameTextView.setText(contactItem.getName());
@@ -59,7 +68,7 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
                 // Créer une instance du fragment SecondFragment
                 EditContactFragment editContactFragment = new EditContactFragment();
 
-                editContactFragment.setContactTel(contactItem.getTel());
+                editContactFragment.setContactId(contactItem.getContactId());
                 editContactFragment.setMode("edit");
 
                 /*// Passer des données au SecondFragment si nécessaire
@@ -81,10 +90,10 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Contact deletion")
-                        .setMessage("Ary you sure you want to delete the contact?")
+                        .setMessage("Are you sure you want to delete the contact?")
                         .setPositiveButton("yes", (dialog, which) -> {
                             ContactsDatabase contactsDatabase = new ContactsDatabase(context);
-                            contactsDatabase.deleteContact(contactItem.getTel());
+                            contactsDatabase.deleteContact(contactItem.getContactId());
                             Intent intent = new Intent(context, MainActivity.class);
                             context.startActivity(intent);
                         })
@@ -104,6 +113,47 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
             contactNameTextView = view.findViewById(R.id.contactNameTextView1);
             contactImageView = view.findViewById(R.id.initialTextView);
         }
+    }
+
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString().toLowerCase().trim();
+                if (charString.isEmpty()) {
+                    filteredContacts = new ArrayList<>(originalContacts);
+                } else {
+                    List<Contact> filteredList = new ArrayList<>();
+                    for (Contact contact : originalContacts) {
+                        if (contact.getName().toLowerCase().contains(charString)) {
+                            filteredList.add(contact);
+                        }
+                    }
+                    filteredContacts = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredContacts;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredContacts = (List<Contact>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    @Override
+    public int getCount() {
+        return filteredContacts.size();
+    }
+
+    @Override
+    public Contact getItem(int position) {
+        return filteredContacts.get(position);
     }
 }
 
