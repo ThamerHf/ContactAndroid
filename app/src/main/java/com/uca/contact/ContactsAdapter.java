@@ -2,6 +2,7 @@ package com.uca.contact;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,19 @@ public class ContactsAdapter extends ArrayAdapter<Contact> implements Filterable
         // Modifiez l'image ici si nécessaire (par exemple, à partir de ressources, d'URL, etc.)
         viewHolder.contactImageView.setImageResource(R.drawable.ic_user);
         //viewHolder.contactImageView.setImageBitmap(BitmapFactory.decodeByteArray(contactItem.getPhoto(), 0, contactItem.getPhoto().length));
+
+        ImageButton callButton = convertView.findViewById(R.id.callButton);
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public  void onClick(View v) {
+
+
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel: " + contactItem.getTel()));
+                v.getContext().startActivity(intent);
+            }
+
+        });
 
         ImageButton editButton = convertView.findViewById(R.id.edit);
         editButton.setOnClickListener(new View.OnClickListener() {
