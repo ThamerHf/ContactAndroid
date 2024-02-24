@@ -2,6 +2,8 @@ package com.uca.contact;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,8 +61,14 @@ public class ContactsAdapter extends ArrayAdapter<Contact> implements Filterable
         // Remplir la vue avec les données de l'élément
         viewHolder.contactNameTextView.setText(contactItem.getName());
         // Modifiez l'image ici si nécessaire (par exemple, à partir de ressources, d'URL, etc.)
-        viewHolder.contactImageView.setImageResource(R.drawable.ic_user);
-        //viewHolder.contactImageView.setImageBitmap(BitmapFactory.decodeByteArray(contactItem.getPhoto(), 0, contactItem.getPhoto().length));
+        if (contactItem.getPhoto() == null) {
+            viewHolder.contactImageView.setImageResource(R.drawable.ic_user);
+        } else {
+            Bitmap bitmap = BitmapFactory
+                    .decodeByteArray(contactItem.getPhoto(), 0,
+                            contactItem.getPhoto().length);
+            viewHolder.contactImageView.setImageBitmap(bitmap);
+        }
 
         ImageButton callButton = convertView.findViewById(R.id.callButton);
         callButton.setOnClickListener(new View.OnClickListener() {
@@ -84,12 +92,6 @@ public class ContactsAdapter extends ArrayAdapter<Contact> implements Filterable
 
                 editContactFragment.setContactId(contactItem.getContactId());
                 editContactFragment.setMode("edit");
-
-                /*// Passer des données au SecondFragment si nécessaire
-                Bundle bundle = new Bundle();
-                bundle.putString("key", "value");
-                secondFragment.setArguments(bundle);
-*/
                 // Remplacer le fragment actuel par le SecondFragment
                 FragmentTransaction transaction = ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_view, editContactFragment);

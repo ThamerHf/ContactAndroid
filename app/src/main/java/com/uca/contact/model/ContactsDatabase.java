@@ -30,7 +30,7 @@ public class ContactsDatabase extends SQLiteOpenHelper {
                 ",TEL TEXT"+
                 ",NAME TEXT" +
                 ",ADDRESS TEXT" +
-                //",PHOTO BLOB" +
+                ",PHOTO BLOB" +
                 ")";
 
         db.execSQL(CREATE_CONTACTS_TABLE);
@@ -62,7 +62,7 @@ public class ContactsDatabase extends SQLiteOpenHelper {
                 contact.setTel(cursor.getString(1));
                 contact.setName(cursor.getString(2));
                 contact.setAddress(cursor.getString(3));
-                //contact.setPhoto(cursor.getBlob(3));
+                contact.setPhoto(cursor.getBlob(4));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -91,7 +91,7 @@ public class ContactsDatabase extends SQLiteOpenHelper {
             contact.setTel(cursor.getString(1));
             contact.setName(cursor.getString(2));
             contact.setAddress(cursor.getString(3));
-            //contact.setPhoto(cursor.getBlob(3));
+            contact.setPhoto(cursor.getBlob(4));
         }
 
         // Close cursor and database
@@ -111,7 +111,7 @@ public class ContactsDatabase extends SQLiteOpenHelper {
         values.put("TEL", contact.getTel());
         values.put("NAME", contact.getName());
         values.put("ADDRESS", contact.getAddress());
-        //values.put("PHOTO", contact.getPhoto());
+        values.put("PHOTO", contact.getPhoto());
 
         // Inserting Row
         db.insert("CONTACTS", null, values);
@@ -127,10 +127,11 @@ public class ContactsDatabase extends SQLiteOpenHelper {
         values.put("NAME", contact.getName());
         values.put("ADDRESS", contact.getAddress());
         values.put("CONTACT_ID", contact.getContactId());
-        //values.put("PHOTO", contact.getPhoto());
+        values.put("PHOTO", contact.getPhoto());
 
         // Updating Row
-        db.update("CONTACTS", values, "CONTACT_ID = ?", new String[]{contact.getTel()});
+        db.update("CONTACTS", values, "CONTACT_ID = ?",
+                new String[]{contact.getContactId()});
         db.close(); // Closing database connection
     }
 

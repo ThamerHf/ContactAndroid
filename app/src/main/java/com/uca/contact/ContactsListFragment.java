@@ -88,17 +88,4 @@ public class ContactsListFragment extends Fragment {
         return view;
 
     }
-/*
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-*/
 }
