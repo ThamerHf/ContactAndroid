@@ -48,4 +48,8 @@
     <string name="phone_number">Phone number</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="cancel_image_modification">Cancel image modification</string>
+    <string name="delete_image">Delete image</string>
+    <string name="upload_image">Upload image</string>
+    <string name="add_contact">add contact</string>
 </resources>

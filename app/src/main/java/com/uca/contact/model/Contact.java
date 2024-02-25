@@ -22,7 +22,7 @@ public class Contact {
         this.tel = tel;
         this.name = name;
         this.address = address;
-        //this.photo = photo;
+        this.photo = photo;
     }
 
     public String getTel() {

@@ -1,109 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditContactFragment"
-    android:orientation="vertical">
+    tools:context=".EditContactFragment">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginRight="10dp"
-        app:cardBackgroundColor="#EDE9E9">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Media -->
-
-            <ImageView
-                android:id="@+id/photo"
-                android:layout_width="246dp"
-                android:layout_height="226dp"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="test"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/ic_user" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginRight="10dp"
+            app:cardBackgroundColor="#EDE9E9">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="vertical">
 
-                <!-- Title, secondary and supporting text -->
-                <EditText
-                    android:id="@+id/name"
-                    android:layout_width="357dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rectange_edit"
-                    android:hint="@string/contact_name"
-                    android:singleLine="true"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:textAlignment="center"
-                    android:layout_marginTop="10dp"/>
+                <!-- Media -->
 
-                <EditText
-                    android:id="@+id/tel"
-                    android:layout_width="357dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rectange_edit"
-                    android:hint="@string/phone_number"
-                    android:singleLine="true"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:textAlignment="center"
-                    android:layout_marginTop="10dp"/>
+                <ImageView
+                    android:id="@+id/photo"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_height="226dp"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="test"
+                    android:scaleType="fitCenter" />
 
-                <EditText
-                    android:id="@+id/address"
-                    android:layout_width="357dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectange_edit"
-                    android:hint="Address"
-                    android:singleLine="true"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:textAlignment="center"
-                    android:layout_marginTop="10dp"/>
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Title, secondary and supporting text -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/addButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_centerHorizontal="true"
+                            android:backgroundTint="@color/material_dynamic_tertiary60"
+                            android:text="@string/upload_image"
+                            android:visibility="gone"/>
+
+                        <Button
+                            android:id="@+id/deleteButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:backgroundTint="@color/material_dynamic_tertiary60"
+                            android:text="@string/delete_image"
+                            android:visibility="gone" />
+                        <Button
+                            android:id="@+id/cancelUploadImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:backgroundTint="@color/material_dynamic_tertiary60"
+                            android:text="@string/cancel_image_modification"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/rectange_edit"
+                        android:hint="@string/contact_name"
+                        android:singleLine="true"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textAlignment="center"
+                        android:layout_marginTop="10dp"/>
+
+                    <EditText
+                        android:id="@+id/tel"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/rectange_edit"
+                        android:hint="@string/phone_number"
+                        android:singleLine="true"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textAlignment="center"
+                        android:layout_marginTop="10dp"/>
+
+                    <EditText
+                        android:id="@+id/address"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/rectange_edit"
+                        android:hint="Address"
+                        android:singleLine="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textAlignment="center"
+                        android:layout_marginTop="10dp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#94C1AB"
+                android:clickable="true"
+                android:text="@string/save"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#B38E8E"
+                android:clickable="true"
+                android:text="@string/cancel"
+                android:textColor="@color/black" />
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
-
-        <Button
-            android:id="@+id/save"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#94C1AB"
-            android:clickable="true"
-            android:text="@string/save"
-            android:textColor="@color/black" />
-
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#B38E8E"
-            android:clickable="true"
-            android:text="@string/cancel"
-            android:textColor="@color/black" />
     </LinearLayout>
-
-
-</LinearLayout>
+</ScrollView>
